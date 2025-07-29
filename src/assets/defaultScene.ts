@@ -29,6 +29,16 @@ export function createDefaultScene(engine: any, canvas: HTMLCanvasElement, compo
         camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
         camera.setTarget(Vector3.Zero());
         camera.attachControl(canvas, true);
+        
+        // تفعيل WASD للتحكم بالكاميرا
+        camera.keysUp.push(87); // W
+        camera.keysDown.push(83); // S
+        camera.keysLeft.push(65); // A
+        camera.keysRight.push(68); // D
+        
+        // تحسين سرعة الحركة والدوران
+        camera.speed = 0.5;
+        camera.angularSensibility = 2000;
     } else if (ArcRotateCamera) {
         // استخدام ArcRotateCamera كبديل إذا لم تكن FreeCamera متاحة
         camera = new ArcRotateCamera("camera1", -Math.PI / 2, Math.PI / 2.5, 10, Vector3.Zero(), scene);
@@ -82,6 +92,16 @@ var createScene = async function () {
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, true);
     
+    // تفعيل WASD للتحكم بالكاميرا
+    camera.keysUp.push(87); // W
+    camera.keysDown.push(83); // S
+    camera.keysLeft.push(65); // A
+    camera.keysRight.push(68); // D
+    
+    // تحسين سرعة الحركة والدوران
+    camera.speed = 0.5;
+    camera.angularSensibility = 2000;
+    
     // إنشاء الإضاءة
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.7;
@@ -125,8 +145,22 @@ var createScene = function () {
     // توجيه الكاميرا نحو مركز المشهد
     camera.setTarget(BABYLON.Vector3.Zero());
 
-    // ربط الكاميرا بالـ canvas
+    // ربط الكاميرا بالـ canvas مع تفعيل التحكم الكامل
     camera.attachControl(canvas, true);
+    
+    // تفعيل WASD للتحكم بالكاميرا - إضافة مفاتيح إضافية
+    camera.keysUp.push(87);    // W key
+    camera.keysDown.push(83);  // S key
+    camera.keysLeft.push(65);  // A key
+    camera.keysRight.push(68); // D key
+    
+    // التأكد من أن المفاتيح تعمل بشكل صحيح
+    camera.keysUpward.push(81);   // Q key for up
+    camera.keysDownward.push(69); // E key for down
+    
+    // تحسين سرعة الحركة والدوران
+    camera.speed = 0.5;
+    camera.angularSensibility = 2000;
 
     // إنشاء الإضاءة، موجهة نحو 0,1,0 - نحو السماء (غير شبكية)
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);

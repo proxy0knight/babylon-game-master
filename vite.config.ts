@@ -8,9 +8,7 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        game: resolve(__dirname, 'game.html'),
-        admin: resolve(__dirname, 'admin.html')
+        main: resolve(__dirname, 'index.html')
       }
     }
   },
