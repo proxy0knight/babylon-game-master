@@ -1339,13 +1339,12 @@ export class AdminDashboard {
             try {
                 const webGPUSupported = await WebGPUEngine.IsSupportedAsync;
                 if (webGPUSupported && navigator.gpu) {
-                    const adapter = await navigator.gpu.requestAdapter();
-                    if (adapter) {
-                        this.engine = new WebGPUEngine(this.canvas, {
-                            antialias: true,
-                            stencil: true,
-                            preserveDrawingBuffer: true
-                        });
+                                    const adapter = await navigator.gpu.requestAdapter();
+                if (adapter && this.canvas) {
+                    this.engine = new WebGPUEngine(this.canvas, {
+                        antialias: true,
+                        stencil: true
+                    });
                         await this.engine.initAsync();
                         this.isWebGPUEnabled = true;
                         return;
@@ -1455,7 +1454,7 @@ export class AdminDashboard {
                 import('@babylonjs/core/Meshes/abstractMesh'),
                 import('@babylonjs/core/Loading/sceneLoader'),
                 import('@babylonjs/core/Loading/Plugins/babylonFileLoader'),
-                import('@babylonjs/loaders/glTF/glTFFileLoader'), // <-- Corrected for @babylonjs/loaders package
+                import('@babylonjs/loaders/glTF/glTFFileLoader'),
                 import('@babylonjs/core/Rendering/depthRendererSceneComponent'),
                 import('@babylonjs/core/Rendering/geometryBufferRendererSceneComponent'),
                 import('@babylonjs/core/Rendering/prePassRendererSceneComponent'),
@@ -1463,7 +1462,10 @@ export class AdminDashboard {
                 import('@babylonjs/core/Misc/fileTools'),
                 import('@babylonjs/core/Audio/sound'),
                 import('@babylonjs/core/Audio/audioEngine'),
-                import('@babylonjs/core/Audio/analyser')
+                import('@babylonjs/core/Audio/analyser'),
+                // Additional imports to ensure all Scene methods are available
+                import('@babylonjs/core/Meshes/meshBuilder'),
+                import('@babylonjs/core/Meshes/transformNode')
             ]);
             // Explicitly register the GLTFFileLoader with SceneLoader
             try {
@@ -1505,6 +1507,8 @@ export class AdminDashboard {
             // إنشاء كائن BABYLON كامل مع جميع الميزات
             const BABYLON = {
                 ...BABYLON_CORE,
+                // Ensure Scene class is properly included with all prototype methods
+                Scene: BABYLON_CORE.Scene,
                 Engine: {
                     ...Engine,
                     audioEngine: {
@@ -1521,6 +1525,8 @@ export class AdminDashboard {
                 NodeMaterial,
                 DefaultRenderingPipeline,
                 GUI: BABYLON_GUI,
+                // Ensure SceneLoader is properly included
+                SceneLoader: BABYLON_CORE.SceneLoader,
                 
                 // Legacy Mesh creation methods for compatibility
                 Mesh: {
@@ -2411,7 +2417,8 @@ export class AdminDashboard {
 
         } catch (error) {
             console.error('Error clearing imports:', error);
-            this.updateImportStatus(`خطأ في مسح الملفات: ${error.message}`, 'error');
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            this.updateImportStatus(`خطأ في مسح الملفات: ${errorMessage}`, 'error');
         }
     }
 
@@ -2633,9 +2640,10 @@ export class AdminDashboard {
             }
         } catch (error) {
             console.error('Error loading assets:', error);
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             assetGrid.innerHTML = `
                 <div style="grid-column: 1 / -1; text-align: center; color: #e74c3c; padding: 2rem;">
-                    خطأ في تحميل الأصول: ${error.message}
+                    خطأ في تحميل الأصول: ${errorMessage}
                 </div>
             `;
         }
@@ -2746,7 +2754,8 @@ export class AdminDashboard {
             }
         } catch (error) {
             console.error('Error loading asset from library:', error);
-            alert(`خطأ في تحميل ${asset.name}: ${error.message}`);
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            alert(`خطأ في تحميل ${asset.name}: ${errorMessage}`);
         }
     }
 
@@ -2812,11 +2821,12 @@ export class AdminDashboard {
 
         } catch (error) {
             console.error('Error loading project:', error);
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             const statusText = document.getElementById('status-text');
             if (statusText) {
-                statusText.textContent = `خطأ في التحميل: ${error.message}`;
+                statusText.textContent = `خطأ في التحميل: ${errorMessage}`;
             }
-            alert(`خطأ في التحميل: ${error.message}`);
+            alert(`خطأ في التحميل: ${errorMessage}`);
         }
     }
 
