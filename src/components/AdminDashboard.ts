@@ -1,6 +1,7 @@
 import { Router } from '@/utils/Router';
 import { getDefaultSceneCode, getWebGPUSceneCode } from '@/assets/defaultScene';
 import { ApiClient } from '@/utils/ApiClient';
+import "@babylonjs/loaders/glTF";
 
 /**
  * لوحة التحكم الإدارية - Playground Editor

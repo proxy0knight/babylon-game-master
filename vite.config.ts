@@ -24,7 +24,13 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
-    open: true
+    open: true,
+    fs: {
+      strict: false
+    },
+    allowedHosts: [
+      '3000-i9ho0jnsu26cbx6vv81f6-e494eed5.manusvm.computer'
+    ]
   },
   optimizeDeps: {
     include: [
