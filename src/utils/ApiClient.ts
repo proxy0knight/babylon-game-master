@@ -3,8 +3,8 @@
  */
 export class ApiClient {
     private baseUrl: string;
-
-    constructor(baseUrl: string = 'http://localhost:5001/api') {
+// change the url foe the api path and make sure it is public
+    constructor(baseUrl: string = `https://reimagined-cod-4jvg75jgjjvv2q4w6-5001.app.github.dev/api`) {
         this.baseUrl = baseUrl;
     }
 
@@ -59,6 +59,7 @@ export class ApiClient {
      */
     async listAssets(type: 'map' | 'character' | 'object'): Promise<any> {
         try {
+            
             const response = await fetch(`${this.baseUrl}/assets/list/${type}`);
 
             if (!response.ok) {
