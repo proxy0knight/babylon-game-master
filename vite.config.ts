@@ -29,7 +29,8 @@ export default defineConfig({
       strict: false
     },
     allowedHosts: [
-      '3000-i9ho0jnsu26cbx6vv81f6-e494eed5.manusvm.computer'
+      '3000-i9ho0jnsu26cbx6vv81f6-e494eed5.manusvm.computer',
+      '3000-ikwv5bkgclxz0t4oy5gif-6721939a.manusvm.computer'
     ]
   },
   optimizeDeps: {

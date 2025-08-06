@@ -1537,6 +1537,21 @@ export class AdminDashboard {
                     },
                     CreateBox: (name: string, size: number, scene: any) => {
                         return BABYLON_CORE.MeshBuilder.CreateBox(name, { size: size }, scene);
+                    },
+                    CreateSphere: (name: string, segments: number, diameter: number, scene: any) => {
+                        return BABYLON_CORE.MeshBuilder.CreateSphere(name, { segments: segments, diameter: diameter }, scene);
+                    },
+                    CreateGround: (name: string, width: number, height: number, subdivisions: number, scene: any) => {
+                        return BABYLON_CORE.MeshBuilder.CreateGround(name, { width: width, height: height, subdivisions: subdivisions }, scene);
+                    },
+                    CreateCylinder: (name: string, height: number, diameterTop: number, diameterBottom: number, tessellation: number, subdivisions: number, scene: any) => {
+                        return BABYLON_CORE.MeshBuilder.CreateCylinder(name, { height: height, diameterTop: diameterTop, diameterBottom: diameterBottom, tessellation: tessellation, subdivisions: subdivisions }, scene);
+                    },
+                    CreateTorus: (name: string, diameter: number, thickness: number, tessellation: number, scene: any) => {
+                        return BABYLON_CORE.MeshBuilder.CreateTorus(name, { diameter: diameter, thickness: thickness, tessellation: tessellation }, scene);
+                    },
+                    CreateTorusKnot: (name: string, radius: number, tube: number, radialSegments: number, tubularSegments: number, p: number, q: number, scene: any) => {
+                        return BABYLON_CORE.MeshBuilder.CreateTorusKnot(name, { radius: radius, tube: tube, radialSegments: radialSegments, tubularSegments: tubularSegments, p: p, q: q }, scene);
                     }
                 },
                 
