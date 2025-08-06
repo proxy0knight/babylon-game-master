@@ -1512,7 +1512,8 @@ export class AdminDashboard {
                 Scene: BABYLON_CORE.Scene,
                 Color3: {
                     ...BABYLON_CORE.Color3,
-                    FromInts: (r: number, g: number, b: number) => {
+                    FromInts: function(r: number, g: number, b: number) {
+                        // Always return a new Color3 instance, regardless of whether 'new' was used
                         return new BABYLON_CORE.Color3(r / 255, g / 255, b / 255);
                     }
                 },
