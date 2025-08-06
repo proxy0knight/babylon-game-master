@@ -1510,7 +1510,12 @@ export class AdminDashboard {
                 ...BABYLON_CORE,
                 // Ensure Scene class is properly included with all prototype methods
                 Scene: BABYLON_CORE.Scene,
-                Color3: BABYLON_CORE.Color3,
+                Color3: {
+                    ...BABYLON_CORE.Color3,
+                    FromInts: (r: number, g: number, b: number) => {
+                        return new BABYLON_CORE.Color3(r / 255, g / 255, b / 255);
+                    }
+                },
                 Engine: {
                     ...Engine,
                     audioEngine: {
