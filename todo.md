@@ -65,3 +65,12 @@
 - ✅ واجهة مستخدم متجاوبة
 - ✅ محرك Babylon.js مع WebGPU
 
+
+
+## الإصلاحات الحالية:
+- [x] إصلاح مشكلة BABYLON.Mesh.CreateSphere وطرق إنشاء الكائنات القديمة
+- [x] إصلاح مشاكل strict mode في تنفيذ الكود
+- [x] إضافة دعم أفضل لـ TypeScript/JavaScript toggle
+- [x] اختبار الإصلاحات مع أمثلة من Babylon.js playground
+- [ ] رفع المشروع المحدث إلى GitHub
+

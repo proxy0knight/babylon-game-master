@@ -907,6 +907,7 @@ export class AdminDashboard {
         const engineSelector = document.getElementById('engine-selector') as HTMLSelectElement;
         const closeLibraryBtn = document.getElementById('close-library-btn');
         const libraryAssetTypeSelect = document.getElementById('library-asset-type') as HTMLSelectElement;
+        const languageSelect = document.getElementById('language-select') as HTMLSelectElement;
         
         // أزرار منطقة العرض
         const wireframeBtn = document.getElementById('wireframe-btn');
@@ -934,6 +935,7 @@ export class AdminDashboard {
         engineSelector?.addEventListener('change', () => this.switchEngine());
         closeLibraryBtn?.addEventListener('click', () => this.closeAssetLibrary());
         libraryAssetTypeSelect?.addEventListener('change', () => this.refreshAssetLibrary());
+        languageSelect?.addEventListener('change', () => this.switchLanguage());
         
         // مستمعي أحداث أزرار منطقة العرض
         wireframeBtn?.addEventListener('click', () => this.toggleWireframe());
@@ -2014,7 +2016,13 @@ export class AdminDashboard {
                     console.log('External assets path redirection setup complete');
                 }
                 
-                ${code}
+                // Execute user code without strict mode for better compatibility
+                try {
+                    ${code}
+                } catch (error) {
+                    console.error('Error in user code execution:', error);
+                    throw error;
+                }
                 
                 // Spatial audio is now automatically handled by Sound constructor
                 
@@ -2880,6 +2888,42 @@ export class AdminDashboard {
         } catch (error) {
             console.error('خطأ في تنظيف مجلد external-import:', error);
             // لا نوقف العملية إذا فشل التنظيف
+        }
+    }
+
+    /**
+     * تبديل لغة المحرر
+     */
+    private switchLanguage(): void {
+        const languageSelect = document.getElementById('language-select') as HTMLSelectElement;
+        if (!languageSelect || !this.editor) return;
+
+        const selectedLanguage = languageSelect.value;
+        console.log('Switching editor language to:', selectedLanguage);
+
+        // تحديث لغة المحرر
+        const model = this.editor.getModel();
+        if (model) {
+            // إنشاء نموذج جديد باللغة المحددة
+            const currentValue = this.editor.getValue();
+            const newModel = monaco.editor.createModel(currentValue, selectedLanguage);
+            this.editor.setModel(newModel);
+            
+            // تحديث خيارات المحرر حسب اللغة
+            if (selectedLanguage === 'typescript') {
+                this.editor.updateOptions({
+                    // خيارات خاصة بـ TypeScript
+                    'typescript.preferences.includePackageJsonAutoImports': 'auto',
+                    'typescript.suggest.autoImports': true,
+                });
+            } else {
+                this.editor.updateOptions({
+                    // خيارات خاصة بـ JavaScript
+                    'javascript.suggest.autoImports': true,
+                });
+            }
+
+            console.log(`Editor language switched to ${selectedLanguage}`);
         }
     }
 
